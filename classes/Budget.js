@@ -1,28 +1,42 @@
 const Envelope = require('./Envelope.js')
 
-class Budget {
-	constructor(budget, currency = undefined) {
+class Budget
+{
+	constructor(budget, currency = undefined)
+	{
 		this.budget = budget
-		this.currency = currency 
+		this.currency = currency
+		this.spendings = {}
 	}
 
-	add({name, amount}) {
+	addEnvelope({ name, amount })
+	{
 		this[name] = new Envelope(name, amount)
 	}
 
-	get balance() {
+	addSpending(spending)
+	{
+		const { uuid, envelope } = spending
+		this.spendings[uuid] = spending
+		if (envelope)
+			envelope.addSpending(spending)
+	}
+
+	get balance()
+	{
 		let spent = 0
-		for (const property in this) {
-			spent += this[property] instanceof Envelope ? this[property].amount : 0
+		for (const property in this)
+		{
+			spent +=
+				this[property] instanceof Envelope ? this[property].amount : 0
 		}
 		return this.budget - spent
 	}
 
-	set balance(balance) {
+	set balance(balance)
+	{
 		this.balance = balance
 	}
-
-
 }
 
 module.exports = Budget
