@@ -1,12 +1,8 @@
-const currencies = require('../constants/currencies.js')
-
-class Envelope {
-	constructor(budget, currency = undefined) {
-		this.budget = budget
-		this.currency = currency ?? currencies.USD
+class Envelope{
+	constructor(name, amount) {
+		this.name = name;
+		this.amount = amount;
 	}
-
-
 }
 
 module.exports = Envelope
