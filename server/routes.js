@@ -31,8 +31,15 @@ apiRouter.get('/envelopes', (req, res) => {
 })
 
 apiRouter.post('/envelopes', checkDuplicate, checkBudget, (req, res) => {
-	b.addEnvelope(req.body)
-	res.send(b)
+	try
+	{
+		b.addEnvelope(req.body)
+		res.send(b)
+	}
+	catch (err)
+	{
+		res.sendStatus(500)
+	}
 })
 
 apiRouter.get('/envelopes/:name', (req, res) => {
@@ -67,7 +74,6 @@ apiRouter.post('/spendings', (req, res) => {
 		amount,
 	})
 	res.send(s)
-	console.log('Budget : ', b)
 })
 
 module.exports = apiRouter

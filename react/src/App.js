@@ -1,26 +1,19 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import './App.css'
+import Menu from './components/Menu.jsx'
 
 function App()
 {
+    const [budget, setBudget] = useState(undefined)
     useEffect(() => {
         fetch('/api/envelopes')
             .then((response) => response.json())
-            .then((response) => console.debug(response))
+            .then((response) => setBudget(response))
     }, [])
     return (
         <div className="App">
             <header className="App-header">
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
+                {budget && <Menu budget={budget} />}
             </header>
         </div>
     )
